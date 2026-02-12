@@ -24,6 +24,48 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let labels = [numLabel1!, numLabel2!, numLabel3!, numLabel4!, numLabel5!, numLabel6!, numLabel7!]
+        var nums = [Int]()
+        while nums.count<labels.count{
+            let rndNum = Int.random(in: 1...45)
+            if !nums.contains(rndNum){
+                nums.append(rndNum)
+            }
+        }
+        let sortedNums = nums.sorted()
+        //decending order
+        for (index, label) in labels.enumerated(){
+            label.layer.cornerRadius = label.bounds.width / 2
+            label.clipsToBounds = true
+            label.text = "\(sortedNums[index])" //String Interpolation "\()"
+            
+            switch sortedNums[index]{
+            case 1...10:
+                label.backgroundColor = .red
+                label.textColor = .white
+            case 11...20:
+                label.backgroundColor = .yellow
+                label.textColor = .black
+            case 21...30:
+                label.backgroundColor = .blue
+                label.textColor = .white
+            case 31...40:
+                label.backgroundColor = .green
+                label.textColor = .black
+            case 41...45:
+                label.backgroundColor = .red
+                label.textColor = .white
+            default:
+                break
+          
+        }
+            numLabel7.backgroundColor = UIColor.purple
+            numLabel7.textColor = .white
+            
+        }
+      
+        /*
         numLabel1.layer.cornerRadius = numLabel1.bounds.width/2
         numLabel1.clipsToBounds = true
         numLabel2.layer.cornerRadius = numLabel1.bounds.width/2
@@ -198,6 +240,7 @@ class ViewController: UIViewController {
                 break
           
         }
+         */
 
 
 
