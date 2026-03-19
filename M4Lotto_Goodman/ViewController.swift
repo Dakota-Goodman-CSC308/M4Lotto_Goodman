@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var numLabel1: UILabel!
     @IBOutlet weak var numLabel2: UILabel!
     @IBOutlet weak var numLabel3: UILabel!
@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var numLabel5: UILabel!
     @IBOutlet weak var numLabel6: UILabel!
     @IBOutlet weak var numLabel7: UILabel!
+    
+    @IBOutlet var labels: [UILabel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,37 +40,46 @@ class ViewController: UIViewController {
             return(UIColor.red, UIColor.white)
         default:
             return(UIColor.purple, UIColor.white)
-      
+            
+        }
     }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let labels = [numLabel1!, numLabel2!, numLabel3!, numLabel4!, numLabel5!, numLabel6!, numLabel7!]
-        var nums = [Int]()
-        while nums.count<labels.count{
-            let rndNum = Int.random(in: 1...45)
-            if !nums.contains(rndNum){
-                nums.append(rndNum)
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        coordinator.animate { _ in
+            for label in self.labels {
+                label.layer.cornerRadius = label.bounds.width / 2
+                label.clipsToBounds = true
             }
         }
-        let sortedNums = nums.sorted()
-        //decending order
-        for (index, label) in labels.enumerated(){
-            label.layer.cornerRadius = label.bounds.width / 2
-            label.clipsToBounds = true
-            
-            label.text = "\(sortedNums[index])" //String Interpolation "\()"
-            
-            label.backgroundColor = getColors(from: sortedNums[index]).backgroundColor
-            label.textColor = getColors(from: sortedNums[index]).textColor
-        }
+    }
         
+    override func viewDidAppear(_ animated: Bool) {
+            
+        
+            var nums = [Int]()
+            while nums.count<labels.count{
+                let rndNum = Int.random(in: 1...45)
+                if !nums.contains(rndNum){
+                    nums.append(rndNum)
+                }
+            }
+            nums.sort()
+            //        let sortedNums = nums.sorted()
+            
+            //decending order
+            for (index, label) in labels.enumerated(){
+                label.layer.cornerRadius = label.bounds.width / 2
+                label.clipsToBounds = true
+                
+                label.text = "\(nums[index])" //String Interpolation "\()"
+                
+                label.backgroundColor = getColors(from: nums[index]).backgroundColor
+                label.textColor = getColors(from: nums[index]).textColor
+            }
+            
             let colors = getColors(from: nil)
             numLabel7.backgroundColor = colors.backgroundColor
             numLabel7.textColor = colors.textColor
             
+        }
     }
-}
-
