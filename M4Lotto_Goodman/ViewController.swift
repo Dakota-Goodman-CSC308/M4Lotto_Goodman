@@ -54,32 +54,15 @@ class ViewController: UIViewController {
     }
         
     override func viewDidAppear(_ animated: Bool) {
-            
-        
-            var nums = [Int]()
-            while nums.count<labels.count{
-                let rndNum = Int.random(in: 1...45)
-                if !nums.contains(rndNum){
-                    nums.append(rndNum)
-                }
-            }
-            nums.sort()
-            //        let sortedNums = nums.sorted()
+        let nums = Int.uniqueRandomNumber(in: 1 ... 45, count: 7)
             
             //decending order
             for (index, label) in labels.enumerated(){
-                label.layer.cornerRadius = label.bounds.width / 2
-                label.clipsToBounds = true
-                
-                label.text = "\(nums[index])" //String Interpolation "\()"
-                
-                label.backgroundColor = getColors(from: nums[index]).backgroundColor
-                label.textColor = getColors(from: nums[index]).textColor
+                if label == labels.last{
+                    label.setLottoNumber(nums[index], with: .purple, textColor: .white)
+                } else {
+                    label.setLottoNumber(nums[index])
+                }
             }
-            
-            let colors = getColors(from: nil)
-            numLabel7.backgroundColor = colors.backgroundColor
-            numLabel7.textColor = colors.textColor
-            
         }
     }
